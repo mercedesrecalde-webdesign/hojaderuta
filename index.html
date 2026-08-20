@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sin Gluten · Pan de Molde · Centro Rainero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --violeta:#6A1B9A;--violeta-osc:#4A148C;--violeta-med:#7B1FA2;
+    --fucsia:#D81B60;--turquesa:#00E5FF;--turquesa-osc:#00ACC1;
+    --naranja:#FF9100;--verde:#76FF03;--verde-osc:#52B202;--rojo:#E74C3C;
+    --crema:#FAFAFA;--gris-claro:#F5F5F5;--gris:#666;--gris-osc:#1A1A1A;--blanco:#FFF;
+    --radius:12px;--radius-lg:20px;--sombra:0 4px 20px rgba(0,0,0,0.08);
+    --sombra-violeta:0 25px 60px rgba(106,27,154,0.18);--transition:all 0.3s ease;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Open Sans',sans-serif;background:var(--crema);color:var(--gris-osc);line-height:1.6}
+
+  header{position:relative;padding:48px 24px 44px;text-align:center;background:linear-gradient(135deg,var(--violeta),var(--turquesa-osc));color:#fff;overflow:hidden}
+  header::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,.35),transparent 70%)}
+  header::after{content:"";position:absolute;bottom:-80px;left:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(216,27,96,.22),transparent 70%)}
+  .brand{font-family:'Montserrat';font-weight:600;letter-spacing:.3em;font-size:.72rem;text-transform:uppercase;opacity:.92;position:relative}
+  header h1{font-family:'Montserrat';font-weight:800;font-size:clamp(2.2rem,7vw,3.8rem);line-height:1.02;margin:8px 0 6px;position:relative;letter-spacing:-.01em}
+  header .sub{font-weight:500;font-size:clamp(.95rem,3vw,1.25rem);opacity:.95;position:relative}
+  .date-pill{display:inline-block;margin-top:18px;padding:8px 22px;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.4);border-radius:40px;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;position:relative;backdrop-filter:blur(6px)}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid #eee;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:13px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .tab{font-family:'Montserrat';font-weight:600;font-size:.88rem;border:2px solid #eee;background:#fff;color:var(--gris);padding:9px 18px;border-radius:40px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:7px}
+  .tab:hover{border-color:var(--violeta);color:var(--violeta);transform:translateY(-2px)}
+  .tab.active{background:linear-gradient(135deg,var(--violeta),var(--violeta-med));color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(106,27,154,.35)}
+  .tab .emoji{font-size:1.05rem}
+
+  main{max-width:880px;margin:0 auto;padding:34px 20px 80px}
+  .view{display:none;animation:fade .4s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  .recipe-hero{border-radius:var(--radius-lg);overflow:hidden;position:relative;margin-bottom:26px;box-shadow:var(--sombra-violeta);min-height:190px;display:flex;align-items:flex-end;background-size:cover;background-position:center}
+  .recipe-hero.ph-blanco{background:linear-gradient(135deg,var(--violeta),var(--turquesa-osc))}
+  .recipe-hero.ph-semillas{background:linear-gradient(135deg,#5D4037,var(--verde-osc))}
+  .recipe-hero .overlay{width:100%;background:linear-gradient(to top,rgba(26,26,26,.55),transparent);padding:26px 24px 22px}
+  .recipe-hero h2{font-family:'Montserrat';font-weight:800;color:#fff;font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.05}
+  .recipe-hero .tagline{color:#fff;opacity:.92;font-size:1rem;margin-top:3px}
+  .meta-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+  .meta-chip{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);color:#fff;backdrop-filter:blur(4px);padding:6px 14px;border-radius:40px;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:6px}
+  .meta-chip.cat{background:rgba(0,172,193,.85);border-color:rgba(0,172,193,.4)}
+
+  .section-title{font-family:'Montserrat';font-weight:800;font-size:1.45rem;color:var(--violeta);margin:30px 0 14px;display:flex;align-items:center;gap:11px}
+  .section-title::before{content:"";width:7px;height:25px;border-radius:4px;background:linear-gradient(var(--turquesa),var(--violeta))}
+
+  .ing-group{background:#fff;border-radius:var(--radius-lg);margin-bottom:16px;box-shadow:var(--sombra);overflow:hidden}
+  .ing-group h4{font-family:'Montserrat';font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.76rem;color:#fff;padding:11px 20px;background:linear-gradient(135deg,var(--violeta),var(--violeta-med))}
+  .ing-group.pre h4{background:linear-gradient(135deg,var(--turquesa-osc),var(--turquesa))}
+  .ing-group.cover h4{background:linear-gradient(135deg,var(--turquesa-osc),var(--verde-osc))}
+  .ing-row{display:flex;justify-content:space-between;align-items:center;padding:11px 20px;border-bottom:1px solid var(--gris-claro);font-size:.95rem;cursor:pointer;transition:background .2s}
+  .ing-row:last-child{border-bottom:none}
+  .ing-row:hover{background:#FAF4FF}
+  .ing-row.checked{opacity:.45}
+  .ing-row.checked .ing-name{text-decoration:line-through}
+  .ing-name{display:flex;align-items:center;gap:11px}
+  .ing-check{width:20px;height:20px;border-radius:7px;border:2px solid var(--violeta);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;transition:all .2s}
+  .ing-row.checked .ing-check{background:var(--violeta)}
+  .ing-qty{font-family:'Montserrat';font-weight:700;color:var(--violeta);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  .step{background:#fff;border-radius:var(--radius-lg);margin-bottom:14px;padding:20px 22px;display:flex;gap:18px;box-shadow:var(--sombra);position:relative;transition:var(--transition);border-left:5px solid var(--violeta)}
+  .step:hover{box-shadow:0 12px 30px rgba(106,27,154,.15);transform:translateY(-2px)}
+  .step.done{border-left-color:var(--verde-osc);background:linear-gradient(135deg,#F6FFEE,#fff)}
+  .step-num{flex-shrink:0;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--violeta),var(--turquesa-osc));color:#fff;font-family:'Montserrat';font-weight:800;font-size:1.4rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(106,27,154,.3)}
+  .step.done .step-num{background:linear-gradient(135deg,var(--verde-osc),#66BB6A)}
+  .step-body{flex:1}
+  .step-body .step-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px}
+  .step-body h5{font-family:'Montserrat';font-weight:700;font-size:1.05rem;color:var(--gris-osc)}
+  .step-body p{font-size:.95rem;color:#444}
+  .params{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+  .param{display:inline-flex;align-items:center;gap:6px;background:#FAF4FF;border:1px solid #ECD9F5;padding:5px 13px;border-radius:40px;font-size:.82rem;font-weight:600;color:var(--violeta)}
+  .param .ic{font-size:.95rem}
+  .timer-btn{background:linear-gradient(135deg,var(--naranja),#F57C00);color:#fff;border:none;cursor:pointer;padding:6px 15px;border-radius:40px;font-family:'Montserrat';font-weight:600;font-size:.82rem;display:inline-flex;align-items:center;gap:6px;transition:var(--transition)}
+  .timer-btn:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(255,145,0,.4)}
+  .timer-btn.running{background:linear-gradient(135deg,var(--turquesa-osc),var(--turquesa));animation:pulse 1.3s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.5)}50%{box-shadow:0 0 0 8px rgba(0,229,255,0)}}
+  .step-toggle{flex-shrink:0;width:27px;height:27px;border-radius:50%;border:2px solid #ddd;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:transparent;transition:all .2s}
+  .step.done .step-toggle{background:var(--verde-osc);border-color:var(--verde-osc);color:#fff}
+
+  .tip{background:linear-gradient(135deg,#E8FBFF,#CBF3FF);border-left:5px solid var(--turquesa-osc);border-radius:var(--radius);padding:13px 17px;margin:16px 0;font-size:.92rem}
+  .tip strong{color:#00838F}
+  .alerta{background:linear-gradient(135deg,#FFF8E1,#FFF3CD);border-left:5px solid #F9A825;border-radius:var(--radius);padding:14px 18px;margin:16px 0;font-size:.92rem}
+  .alerta strong{color:#E65100}
+
+  .mise{background:#fff;border-radius:var(--radius-lg);padding:22px 24px;margin-bottom:24px;box-shadow:var(--sombra);border-left:5px solid var(--turquesa-osc)}
+  .mise h3{font-family:'Montserrat';font-weight:800;color:var(--violeta);font-size:1.25rem;margin-bottom:4px}
+  .mise .mise-sub{font-size:.9rem;color:var(--gris);margin-bottom:12px}
+  .mise-row{display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-top:1px solid var(--gris-claro);font-size:.93rem;cursor:pointer}
+  .mise-row:first-of-type{border-top:none}
+  .mise-row.checked{opacity:.45}
+  .mise-row.checked .mise-txt{text-decoration:line-through}
+  .mise-check{width:20px;height:20px;border-radius:7px;border:2px solid var(--turquesa-osc);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff;margin-top:2px}
+  .mise-row.checked .mise-check{background:var(--turquesa-osc)}
+
+  .timeline{position:relative;padding-left:6px}
+  .tl-item{position:relative;padding:0 0 8px 36px;border-left:3px solid #ECD9F5;margin-left:14px}
+  .tl-item:last-child{border-left-color:transparent}
+  .tl-dot{position:absolute;left:-15px;top:0;width:28px;height:28px;border-radius:50%;background:#fff;border:3px solid var(--violeta);display:flex;align-items:center;justify-content:center;font-size:.72rem}
+  .tl-time{font-family:'Montserrat';font-weight:800;color:var(--violeta);font-size:1.05rem}
+  .tl-card{background:#fff;border-radius:var(--radius-lg);padding:15px 19px;margin:8px 0 22px;box-shadow:var(--sombra)}
+  .tl-card h5{font-family:'Montserrat';font-weight:700;margin-bottom:9px;color:var(--gris-osc)}
+  .brig{display:flex;gap:11px;align-items:flex-start;font-size:.9rem;padding:7px 0;border-top:1px solid var(--gris-claro)}
+  .brig:first-of-type{border-top:none}
+  .brig-tag{flex-shrink:0;font-family:'Montserrat';font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.03em;padding:4px 11px;border-radius:40px;color:#fff;white-space:nowrap}
+  .b-bla{background:linear-gradient(135deg,var(--violeta),var(--violeta-med))}
+  .b-sem{background:linear-gradient(135deg,#8D6E63,var(--verde-osc))}
+  .b-all{background:linear-gradient(135deg,var(--turquesa-osc),var(--verde-osc))}
+
+  .intro-banner{background:#fff;border-radius:var(--radius-lg);padding:22px 24px;margin-bottom:24px;box-shadow:var(--sombra);border-left:5px solid var(--turquesa)}
+  .intro-banner h3{font-family:'Montserrat';font-weight:800;color:var(--violeta);font-size:1.25rem;margin-bottom:6px}
+  .leyenda{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+
+  .compras-intro{background:#fff;border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:22px;box-shadow:var(--sombra);border-left:5px solid var(--verde-osc)}
+  .compras-intro h3{font-family:'Montserrat';font-weight:800;color:var(--violeta);font-size:1.2rem;margin-bottom:4px}
+  .compras-bar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:14px 0 22px}
+  .compras-btn{font-family:'Montserrat';font-weight:600;font-size:.82rem;border:2px solid #ECD9F5;background:#fff;color:var(--violeta);padding:8px 16px;border-radius:40px;cursor:pointer;transition:var(--transition)}
+  .compras-btn:hover{border-color:var(--violeta);transform:translateY(-2px)}
+  .compras-count{font-size:.85rem;color:var(--gris);font-weight:600}
+
+  .timer-pop{position:fixed;bottom:20px;right:20px;z-index:100;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  .timer-card{background:linear-gradient(135deg,var(--violeta),var(--violeta-osc));color:#fff;border-radius:var(--radius-lg);padding:14px 18px;box-shadow:0 12px 30px rgba(0,0,0,.3);display:flex;align-items:center;gap:14px;min-width:230px;animation:slideup .3s ease}
+  @keyframes slideup{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+  .timer-card.alarm{animation:shake .4s infinite;background:linear-gradient(135deg,var(--fucsia),var(--rojo))}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+  .timer-card .t-name{font-size:.78rem;opacity:.85}
+  .timer-card .t-time{font-family:'Montserrat';font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums;line-height:1}
+  .timer-card button{background:rgba(255,255,255,.22);border:none;color:#fff;width:30px;height:30px;border-radius:9px;cursor:pointer;font-size:1rem}
+
+  .teoria-hero{border-radius:var(--radius-lg);overflow:hidden;position:relative;margin-bottom:26px;padding:34px 26px;background:linear-gradient(135deg,var(--violeta),var(--turquesa-osc));color:#fff;box-shadow:var(--sombra-violeta)}
+  .teoria-hero .eyebrow{font-family:'Montserrat';font-weight:600;letter-spacing:.22em;text-transform:uppercase;font-size:.7rem;opacity:.9}
+  .teoria-hero h2{font-family:'Montserrat';font-weight:800;font-size:clamp(1.7rem,5vw,2.4rem);line-height:1.05;margin:6px 0 4px}
+  .teoria-hero p{font-size:.95rem;opacity:.95;max-width:560px}
+  .teoria-card{background:#fff;border-radius:var(--radius-lg);padding:20px 24px;margin-bottom:16px;box-shadow:var(--sombra);border-left:5px solid var(--turquesa-osc)}
+  .teoria-card p{font-size:.95rem;color:#333;margin-bottom:10px}
+  .teoria-card p:last-child{margin-bottom:0}
+  .teoria-card ul{list-style:none;margin:6px 0 4px}
+  .teoria-card li{font-size:.94rem;color:#333;padding:6px 0 6px 26px;position:relative;border-top:1px solid var(--gris-claro)}
+  .teoria-card li:first-child{border-top:none}
+  .teoria-card li::before{content:"▸";position:absolute;left:6px;top:6px;color:var(--turquesa-osc);font-weight:700}
+  .teoria-card strong{color:var(--violeta)}
+  .formula-pct{background:#fff;border-radius:var(--radius-lg);box-shadow:var(--sombra);overflow:hidden;margin-bottom:16px}
+  .formula-pct h5{font-family:'Montserrat';font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:#fff;padding:11px 20px;background:linear-gradient(135deg,var(--violeta),var(--violeta-med))}
+  .formula-pct .row{display:flex;justify-content:space-between;padding:10px 20px;border-bottom:1px solid var(--gris-claro);font-size:.94rem}
+  .formula-pct .row:last-child{border-bottom:none}
+  .formula-pct .row .pct{font-family:'Montserrat';font-weight:700;color:var(--violeta);font-variant-numeric:tabular-nums}
+
+  footer{text-align:center;padding:30px 20px 50px;color:var(--gris);font-size:.85rem}
+  footer .credit{font-family:'Montserrat';font-weight:700;font-size:1rem;color:var(--violeta);margin-bottom:6px}
+
+  @media(max-width:560px){.step{padding:16px}.recipe-hero{min-height:160px}.ing-qty{font-size:.88rem}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Cocina sin Gluten · CMCL Santiago Rainero</div>
+  <h1>Pan de Molde sin TACC</h1>
+  <div class="sub">Pan Blanco · Pan con Semillas</div>
+  <div class="date-pill">🍞 Guía de trabajo — Clase 09:00 a 13:00</div>
+  <div style="margin-top:12px;font-size:.78rem;opacity:.9;position:relative;max-width:520px;margin-left:auto;margin-right:auto">⏱️ Los timers mantienen la pantalla encendida y avisan con sonido y vibración. Mantené esta página abierta mientras cocinás.</div>
+</header>
+
+<nav id="nav">
+  <button class="tab active" data-view="ruta"><span class="emoji">🗺️</span> Hoja de Ruta</button>
+  <button class="tab" data-view="compras"><span class="emoji">🛒</span> Lista de Compras</button>
+  <button class="tab" data-view="blanco"><span class="emoji">🍞</span> Pan Blanco</button>
+  <button class="tab" data-view="semillas"><span class="emoji">🌻</span> Pan con Semillas</button>
+  <button class="tab" data-view="teoria"><span class="emoji">📖</span> Sin Gluten</button>
+</nav>
+
+<main>
+
+<!-- HOJA DE RUTA -->
+<section class="view active" id="ruta">
+  <div class="intro-banner">
+    <h3>👩‍🍳 Introducción · 09:00 – 09:15</h3>
+    <p>A cargo de la <strong>Prof. Mercedes Recalde</strong>. Breve teórica sobre panificación sin TACC: el rol del <strong>psyllium</strong> y la <strong>goma xántica</strong> como reemplazo de la red de gluten, y por qué estas masas son blandas y pegajosas. La estrategia del día: los dos panes se elaboran <strong>en simultáneo</strong> dentro de cada grupo, repartiendo las manos. 5 grupos de 5 · 3 hornos · 10 panes · todo a 200 °C.</p>
+  </div>
+
+  <div class="mise">
+    <h3>⚖️ Mise en place · 09:15 – 09:50</h3>
+    <p class="mise-sub">Antes de tocar la masa: <strong>todo pesado y listo</strong>. Estas masas no esperan; nada se pesa con la masa en marcha.</p>
+    <div id="mise-list"></div>
+  </div>
+
+  <h2 class="section-title">Los dos panes, en simultáneo</h2>
+  <div class="leyenda">
+    <span class="brig-tag b-bla">🍞 Pan Blanco</span>
+    <span class="brig-tag b-sem">🌻 Pan con Semillas</span>
+  </div>
+
+  <h2 class="section-title">Línea de tiempo 09:00 – 13:00</h2>
+  <div class="timeline" id="timeline"></div>
+
+  <div class="alerta">
+    <strong>⚠️ Nota de tiempos (importante):</strong> estos panes suman leudado (~1h15) + horneado (~1h) = casi 2h20 de proceso pasivo. Si el amasado arranca ~10:10, el pan <strong>sale del horno cerca de las 13</strong>, así que no llega a degustarse caliente dentro del horario. Tres salidas posibles: <strong>(a)</strong> adelantar la mise en place y amasar apenas se termina; <strong>(b)</strong> dejar el leudado más corto, asumiendo algo menos de volumen; <strong>(c)</strong> hornear y degustar la clase siguiente (este pan se conserva tierno 3–4 días). Decidilo según cómo venga el grupo.
+  </div>
+</section>
+
+<!-- LISTA DE COMPRAS -->
+<section class="view" id="compras">
+  <div class="compras-intro">
+    <h3>🛒 Lista de compras de la clase</h3>
+    <p>Todo lo necesario para <strong>Pan Blanco</strong> y <strong>Pan con Semillas</strong>, agrupado por rubro. Cantidades <strong>por pieza</strong>: multiplicá por la cantidad de panes de cada tipo. Tocá cada ítem para tacharlo.</p>
+  </div>
+  <div class="compras-bar">
+    <button class="compras-btn" onclick="marcarCompras(true)">✓ Marcar todo</button>
+    <button class="compras-btn" onclick="marcarCompras(false)">Limpiar</button>
+    <span class="compras-count" id="comprasCount"></span>
+  </div>
+  <div id="lista-compras"></div>
+</section>
+
+<!-- PAN BLANCO -->
+<section class="view" id="blanco">
+  <div class="recipe-hero ph-blanco">
+    <div class="overlay">
+      <h2>Pan de Molde Blanco</h2>
+      <div class="tagline">1 pieza en molde de 23×13 cm · total ~2h40</div>
+      <div class="meta-row">
+        <span class="meta-chip cat">🧂 Sin TACC</span>
+        <span class="meta-chip">🔥 200 °C · 1h–1h10</span>
+        <span class="meta-chip">🕐 Leudado 1h15–1h30</span>
+      </div>
+    </div>
+  </div>
+  <h2 class="section-title">Ingredientes</h2>
+  <div id="ing-blanco"></div>
+  <h2 class="section-title">Paso a paso</h2>
+  <div id="steps-blanco"></div>
+  <div class="tip">💡 <strong>Conservación:</strong> en recipiente cerrado, lugar fresco y seco, 3–4 días. Se mantiene tierno; tostado a la plancha con manteca queda bárbaro.</div>
+</section>
+
+<!-- PAN CON SEMILLAS -->
+<section class="view" id="semillas">
+  <div class="recipe-hero ph-semillas">
+    <div class="overlay">
+      <h2>Pan de Molde con Semillas</h2>
+      <div class="tagline">Sin gluten, sin lactosa, sin frutos secos · vegano opcional</div>
+      <div class="meta-row">
+        <span class="meta-chip cat">🧂 Sin TACC</span>
+        <span class="meta-chip">🔥 200 °C · vapor + horneado</span>
+        <span class="meta-chip">🕐 Leudado 1h15–1h30</span>
+      </div>
+    </div>
+  </div>
+  <div class="alerta">
+    <strong>Ajuste de la clase:</strong> la receta original arranca a 250°, pero los hornos de la escuela trabajan a <strong>200°</strong>. Se hornea todo a 200° y el vapor se compensa manualmente (asadera con agua hirviendo + pulverizar). A menor temperatura el tiempo puede estirarse un poco: guiarse por el dorado, no solo por el reloj.
+  </div>
+  <h2 class="section-title">Ingredientes</h2>
+  <div id="ing-semillas"></div>
+  <h2 class="section-title">Paso a paso</h2>
+  <div id="steps-semillas"></div>
+  <div class="tip">💡 <strong>Conservación:</strong> envuelto en un repasador limpio, lugar fresco y seco, 3–4 días.</div>
+</section>
+
+<!-- SIN GLUTEN (teoría) -->
+<section class="view" id="teoria">
+  <div class="teoria-hero">
+    <div class="eyebrow">Apunte teórico · Prof. Mercedes Recalde</div>
+    <h2>Panificación sin gluten</h2>
+    <p>Por qué estas masas se comportan distinto y cómo lo compensamos. Material de apoyo para entender lo que hacemos en la mesada.</p>
+  </div>
+
+  <h2 class="section-title">1 · El problema del gluten ausente</h2>
+  <div class="teoria-card">
+    <p>En un pan de trigo, el gluten forma una red elástica que atrapa el gas de la fermentación y da estructura. Sin trigo, esa red no existe.</p>
+    <p>El pan sin TACC no se "amasa para desarrollar gluten": se busca <strong>hidratación y viscosidad</strong>, no elasticidad. Por eso las masas son blandas, pegajosas y más parecidas a una pasta espesa que a un bollo.</p>
+  </div>
+
+  <h2 class="section-title">2 · El psyllium: la red de reemplazo</h2>
+  <div class="teoria-card">
+    <p>El psyllium (cáscara de semilla de <em>Plantago</em>) absorbe muchísima agua y forma un <strong>gel</strong>. Ese gel cumple el papel mecánico del gluten: da cohesión, retiene gas y humedad, y permite formar la pieza sin que se desarme. Por eso siempre se hidrata aparte antes de integrarlo.</p>
+  </div>
+
+  <h2 class="section-title">3 · La goma xántica</h2>
+  <div class="teoria-card">
+    <p>Aporta viscosidad y liga los almidones, ayudando a que la miga no se desmigaje. Trabaja junto al psyllium: uno da elasticidad-gel, la otra da cuerpo. En el pan de semillas el vinagre suma un plus de estructura y sabor.</p>
+  </div>
+
+  <h2 class="section-title">4 · La mezcla de harinas</h2>
+  <div class="teoria-card">
+    <p>No hay una sola harina sin TACC que haga todo. Se combinan dos familias:</p>
+    <ul>
+      <li><strong>Féculas / almidones</strong> (mandioca, maíz, papa): liviandad y masticabilidad.</li>
+      <li><strong>Harinas integrales</strong> (mijo, sorgo, trigo sarraceno, teff): sabor, color y nutrientes.</li>
+    </ul>
+    <p>El equilibrio entre almidón y harina define la textura final.</p>
+  </div>
+
+  <h2 class="section-title">5 · Fermentación y horneado</h2>
+  <div class="teoria-card">
+    <p>La levadura funciona igual que en el pan común, pero sin red de gluten el margen es más chico: si sobrefermenta, colapsa. Se busca <strong>duplicar el volumen, no más</strong>. El horno fuerte y el vapor (en el de semillas) ayudan a que la corteza no cierre antes de que el pan termine de crecer.</p>
+  </div>
+
+  <div class="formula-pct">
+    <h5>Fórmula orientativa (pan de molde sin TACC)</h5>
+    <div class="row"><span>Almidones + harinas</span><span class="pct">100%</span></div>
+    <div class="row"><span>Agua / líquidos</span><span class="pct">70–90%</span></div>
+    <div class="row"><span>Psyllium</span><span class="pct">4–6%</span></div>
+    <div class="row"><span>Goma xántica</span><span class="pct">1–2%</span></div>
+    <div class="row"><span>Levadura</span><span class="pct">3–4%</span></div>
+    <div class="row"><span>Sal</span><span class="pct">2%</span></div>
+  </div>
+
+  <div class="tip">💡 <strong>Clave de la clase:</strong> resistir la tentación de agregar harina cuando la masa se siente pegajosa. Esa pegajosidad es normal y necesaria: es agua que el pan necesita para quedar tierno. Más harina = pan denso y seco.</div>
+</section>
+
+</main>
+
+<div class="timer-pop" id="timerPop"></div>
+
+<footer>
+  <div class="credit">✦ Cocina sin Gluten — Prof. Mercedes Recalde ✦</div>
+  <div>Centro Municipal de Capacitación Laboral Santiago Rainero</div>
+  <div style="margin-top:4px">Tocá los ingredientes y pasos para marcarlos ✓ · Usá los ⏱️ timers en leudado y horneado</div>
+</footer>
+
+<script>
+const data = {
+  blanco:{
+    ingredients:[
+      {group:"Gel de psyllium",cls:"pre",items:[["Psyllium (husk)","20 g"],["Agua tibia","280 g"]]},
+      {group:"Secos",cls:"",items:[["Fécula de mandioca","230 g"],["Harina de mijo","135 g"],["Harina de sorgo","60 g"],["Azúcar","50 g"],["Levadura seca","10 g"],["Polvo para hornear","8 g"],["Goma xántica","7 g"],["Sal","12 g"]]},
+      {group:"Húmedos y terminación",cls:"cover",items:[["Leche entera tibia","120 g"],["Huevos medianos/grandes","2 u"],["Aceite de girasol","25 g"],["Clara batida (pincelar)","1 u"]]}
+    ],
+    steps:[
+      {t:"Preparar la batidora",d:"Recomendado: batidora de pie con gancho, porque la masa queda muy blanda y pegajosa.",params:[]},
+      {t:"Gel de psyllium",d:"Mezclar el psyllium con los 280 g de agua tibia. En 30–45 seg se forma un gel.",params:[]},
+      {t:"Integrar los secos",d:"En un bol grande, integrar con batidor de alambre: fécula de mandioca, mijo, sorgo, azúcar, levadura, polvo de hornear, goma xántica y sal.",params:[]},
+      {t:"Húmedos al gel",d:"Agregar la leche, los huevos y el aceite al gel de psyllium y mezclar bien.",params:[]},
+      {t:"Unir todo",d:"Hacer un hueco en el centro de los secos y volcar la mezcla del gel con todo lo agregado.",params:[]},
+      {t:"Amasado extra",d:"Amasar hasta integrar; seguir 4–5 min más con batidora (6–8 a mano). Raspar bordes y fondo con espátula. Este amasado extra deja la masa EXTRA suave: es la clave.",params:[{ic:"⏱️",txt:"+4–5 min"}]},
+      {t:"Trabajar la masa",d:"Queda MUY blanda y pegajosa. Trabajar sobre mesada bien enharinada, con manos enharinadas. No agregar más harina (queda densa y seca). Si está impracticable: 1 h en heladera.",params:[]},
+      {t:"Formar el bollo",d:"Volcar sobre mesada enharinada, espolvorear arriba, amasar suave y formar bollo liso.",params:[]},
+      {t:"Al molde",d:"Formar un cilindro que entre justo en la budinera y pasarlo con cuidado al molde (rocío vegetal o tira de papel manteca).",params:[]},
+      {t:"3 cortes diagonales",d:"Con hoja o cuchillo filoso, hacer 3 cortes diagonales. Cortar antes del leudado asegura que crezca parejo y liso.",params:[]},
+      {t:"Leudado",d:"Tapar flojito con film y leudar en lugar templado hasta duplicar. Si la cocina es fría: taza de agua hirviendo dentro del horno apagado.",params:[{ic:"🕐",txt:"1h15–1h30"}],timer:4500},
+      {t:"Precalentar",d:"A los ~45 min de leudado, precalentar el horno a 200° con placa/piedra gruesa en la rejilla más baja.",params:[{ic:"🔥",txt:"200 °C"}]},
+      {t:"Pincelar",d:"Duplicado el volumen, pincelar suave con la clara batida.",params:[]},
+      {t:"Hornear",d:"Hornear a 200° sobre la placa precalentada, 1h a 1h10, hasta dorado intenso y base/laterales crocantes (pesa ~960–970 g). Si dora rápido arriba, tapar con aluminio.",params:[{ic:"🔥",txt:"200 °C"},{ic:"⏱️",txt:"1h–1h10"}],timer:3900},
+      {t:"Corteza extra (opcional)",d:"Para corteza extra crocante, desmoldar y hornear 5–10 min más sin molde.",params:[{ic:"⏱️",txt:"5–10 min"}]},
+      {t:"Enfriar",d:"Pasar a rejilla apenas sale (no dejar en el molde). Enfriar hasta tibio antes de cortar.",params:[]}
+    ]
+  },
+  semillas:{
+    ingredients:[
+      {group:"Fermento",cls:"pre",items:[["Levadura seca activa","12 g"],["Azúcar","20 g"],["Agua tibia","240 g"]]},
+      {group:"Gel de psyllium",cls:"pre",items:[["Psyllium","30 g"],["Agua tibia","345 g"]]},
+      {group:"Secos y masa",cls:"",items:[["Harina de trigo sarraceno","195 g"],["Fécula de mandioca","150 g"],["Harina de mijo","135 g"],["Sal fina o marina","10 g"],["Vinagre de sidra de manzana","15 g"],["Mix de semillas (lino, girasol, zapallo)","150 g"]]},
+      {group:"Terminación",cls:"cover",items:[["Huevo batido (opcional, dorar)","1 u"]]}
+    ],
+    steps:[
+      {t:"Preparar la budinera",d:"Tener a mano la budinera para 900 g, forrada con papel manteca (ayuda al desmolde).",params:[]},
+      {t:"Fermento",d:"En un bol chico: levadura + azúcar + 240 g de agua tibia. Reposar hasta que espume.",params:[{ic:"⏱️",txt:"10–15 min"}],timer:900},
+      {t:"Gel de psyllium",d:"En otro bol: psyllium + 345 g de agua. En 15–30 seg forma un gel.",params:[]},
+      {t:"Integrar los secos",d:"En un bol grande, integrar trigo sarraceno, fécula de mandioca, mijo y sal.",params:[]},
+      {t:"Amasar",d:"Agregar el fermento, el gel de psyllium y el vinagre a los secos. Amasar hasta que despegue de los bordes (mano o batidora con gancho).",params:[{ic:"⏱️",txt:"5–10 min"}]},
+      {t:"Sumar semillas",d:"Incorporar ~120 g del mix de semillas, amasando hasta distribuir. Reservar el resto para la superficie.",params:[]},
+      {t:"Formado",d:"Pasar a superficie ligeramente aceitada, formar un cilindro cómodo para la budinera. Colocar con la unión hacia abajo y presionar suave para emparejar.",params:[]},
+      {t:"Leudado",d:"Tapar holgado con film y leudar en lugar cálido hasta casi duplicar.",params:[{ic:"🕐",txt:"1h15–1h30"}],timer:4500},
+      {t:"Precalentar con vapor",d:"Mientras leuda: rejilla en posición media, asadera en la base del horno, precalentar a 200°.",params:[{ic:"🔥",txt:"200 °C"}]},
+      {t:"Pincelar y semillas",d:"Leudado, pincelar suave con huevo batido y espolvorear las semillas restantes. (Vegano: pincelar con agua + pizca de azúcar para pegar las semillas.)",params:[]},
+      {t:"Cargar el vapor",d:"Llevar a rejilla media, volcar agua hirviendo en la asadera del fondo, pulverizar el pan 4–5 veces y cerrar enseguida.",params:[{ic:"💨",txt:"Vapor"}]},
+      {t:"Vapor 15 min",d:"Hornear a 200° con vapor 15 min sin abrir (para que no se escape el vapor).",params:[{ic:"🔥",txt:"200 °C"},{ic:"⏱️",txt:"15 min"}],timer:900},
+      {t:"Hornear sin vapor",d:"Retirar la asadera con agua, mantener 200° y hornear 60–70 min más sin vapor, hasta dorado intenso. Si dora rápido arriba, tapar con aluminio.",params:[{ic:"🔥",txt:"200 °C"},{ic:"⏱️",txt:"60–70 min"}],timer:3900},
+      {t:"Desmoldar y enfriar",d:"Apenas sale, desmoldar de inmediato y pasar a rejilla. Enfriar por completo antes de cortar.",params:[]}
+    ]
+  }
+};
+
+const mise=[
+  "Balanza calibrada y en cero. Pesar <strong>todos los secos</strong> de cada pan por separado, en bols rotulados.",
+  "Pesar <strong>los líquidos también en gramos</strong>: agua, leche, aceite, vinagre. Nada \"a ojo\".",
+  "Huevos a temperatura ambiente; separar los que van para pincelar.",
+  "Moldes (23×13) forrados con papel manteca o con rocío vegetal, listos de antemano.",
+  "Mesada enharinada con harina sin TACC y harina extra a mano para el armado.",
+  "Film, hoja o cuchillo filoso para los cortes, rejilla y pincel identificados por grupo.",
+  "Placa gruesa o piedra dentro del horno para precalentar (pan blanco).",
+  "Asadera en la base del horno + agua para el vapor (pan de semillas)."
+];
+
+const roadmap=[
+  {time:"09:00 – 09:15",title:"Introducción teórica",items:[
+    ["b-all","Todos","Presentación del día y fundamentos sin TACC: psyllium, goma xántica y por qué la masa es pegajosa."]
+  ]},
+  {time:"09:15 – 09:50",title:"Mise en place completa",items:[
+    ["b-all","Todos","Pesaje de secos y líquidos de las dos recetas, moldes forrados, hornos precalentando. Nada arranca sin esto terminado."]
+  ]},
+  {time:"09:50 – 10:10",title:"Geles y fermento en simultáneo",items:[
+    ["b-bla","Blanco","Hacer el gel de psyllium (psyllium + 280 g agua)."],
+    ["b-sem","Semillas","Fermento a espumar (levadura + azúcar + 240 g agua, 10–15 min) y su gel de psyllium aparte."]
+  ]},
+  {time:"10:10 – 10:40",title:"Amasado de los dos panes",items:[
+    ["b-bla","Blanco","Integrar secos, sumar húmedos al gel y amasar con amasado extra hasta masa muy suave."],
+    ["b-sem","Semillas","Integrar secos, sumar fermento + gel + vinagre, amasar hasta despegar del bol y agregar semillas."]
+  ]},
+  {time:"10:40 – 10:55",title:"Formado y a los moldes",items:[
+    ["b-bla","Blanco","Formar cilindro, al molde y 3 cortes diagonales antes de leudar."],
+    ["b-sem","Semillas","Formar cilindro con la unión hacia abajo y emparejar."]
+  ]},
+  {time:"10:55 – 11:40",title:"Leudado (~1h15)",items:[
+    ["b-all","Todos","Tapados con film, en lugar templado, hasta duplicar. A los ~45 min, empezar a precalentar los 3 hornos a 200°."]
+  ]},
+  {time:"11:40 – 12:10",title:"Horneado por tandas",items:[
+    ["b-all","Todos","10 panes / 3 hornos → el horneado va por tandas. Pincelar antes de entrar. Semillas: vapor los primeros 15 min. Si dora rápido, tapar con aluminio."]
+  ]},
+  {time:"12:10 – 13:00",title:"Salida del horno y cierre",items:[
+    ["b-all","Todos","Desmoldar y enfriar en rejilla. Según el timing (ver nota), degustación al final o la clase siguiente. Limpieza de puestos."]
+  ]}
+];
+
+function renderIngredients(id,groups){
+  document.getElementById(id).innerHTML=groups.map(g=>`
+    <div class="ing-group ${g.cls}">
+      <h4>${g.group}</h4>
+      ${g.items.map(([n,q])=>`
+        <div class="ing-row" onclick="this.classList.toggle('checked')">
+          <span class="ing-name"><span class="ing-check">✓</span>${n}</span>
+          <span class="ing-qty">${q}</span>
+        </div>`).join("")}
+    </div>`).join("");
+}
+function renderSteps(id,steps){
+  document.getElementById(id).innerHTML=steps.map((s,i)=>{
+    const params=(s.params||[]).map(p=>`<span class="param"><span class="ic">${p.ic}</span>${p.txt}</span>`).join("");
+    const timer=s.timer?`<button class="timer-btn" onclick="startTimer('${s.t.replace(/'/g,'')}',${s.timer},this)">⏱️ Iniciar ${Math.round(s.timer/60)} min</button>`:"";
+    return `<div class="step" id="${id}-${i}">
+      <div class="step-num">${i+1}</div>
+      <div class="step-body">
+        <div class="step-head"><h5>${s.t}</h5><div class="step-toggle" onclick="toggleStep('${id}-${i}')">✓</div></div>
+        <p>${s.d}</p>
+        <div class="params">${params}${timer}</div>
+      </div></div>`;
+  }).join("");
+}
+function toggleStep(id){document.getElementById(id).classList.toggle('done')}
+function renderMise(){
+  document.getElementById('mise-list').innerHTML=mise.map(m=>`
+    <div class="mise-row" onclick="this.classList.toggle('checked')">
+      <span class="mise-check">✓</span><span class="mise-txt">${m}</span>
+    </div>`).join("");
+}
+function renderRoadmap(){
+  document.getElementById('timeline').innerHTML=roadmap.map(r=>`
+    <div class="tl-item"><div class="tl-dot">🕐</div>
+      <div class="tl-time">${r.time}</div>
+      <div class="tl-card"><h5>${r.title}</h5>
+        ${r.items.map(([cls,tag,txt])=>`<div class="brig"><span class="brig-tag ${cls}">${tag}</span><span>${txt}</span></div>`).join("")}
+      </div></div>`).join("");
+}
+
+const compras=[
+  {rubro:"Harinas y almidones sin TACC",items:["Fécula de mandioca — 230 g (blanco) + 150 g (semillas)","Harina de mijo — 135 g (blanco) + 135 g (semillas)","Harina de sorgo — 60 g (blanco)","Harina de trigo sarraceno — 195 g (semillas)","Harina extra sin TACC para enharinar — c/n"]},
+  {rubro:"Estructurantes y leudantes",items:["Psyllium (husk) — 20 g (blanco) + 30 g (semillas)","Goma xántica — 7 g (blanco)","Levadura seca — 10 g (blanco) + 12 g (semillas)","Polvo para hornear — 8 g (blanco)"]},
+  {rubro:"Líquidos y húmedos",items:["Agua tibia — 280 g (blanco) + 585 g (semillas)","Leche entera/vegetal tibia — 120 g (blanco)","Aceite de girasol — 25 g (blanco)","Vinagre de sidra de manzana — 15 g (semillas)","Huevos — 2 (blanco) + 1 para pincelar c/pan · clara aparte (blanco)"]},
+  {rubro:"Sabor, semillas y sal",items:["Azúcar — 50 g (blanco) + 20 g (semillas)","Sal — 12 g (blanco) + 10 g (semillas)","Mix de semillas (lino, girasol, zapallo) — 150 g (semillas)"]},
+  {rubro:"Insumos y utensilios",items:["Moldes de pan de molde / budineras 23×13 cm","Papel manteca · film · papel aluminio","Rocío vegetal · pincel · hoja o cuchillo filoso","Rejilla metálica · pulverizador con agua · placa/piedra gruesa"]}
+];
+function renderCompras(){
+  document.getElementById('lista-compras').innerHTML=compras.map(g=>`
+    <div class="ing-group">
+      <h4>${g.rubro}</h4>
+      ${g.items.map(it=>`
+        <div class="ing-row" onclick="this.classList.toggle('checked');actualizarComprasCount()">
+          <span class="ing-name"><span class="ing-check">✓</span>${it}</span>
+        </div>`).join("")}
+    </div>`).join("");
+  actualizarComprasCount();
+}
+function marcarCompras(estado){
+  document.querySelectorAll('#lista-compras .ing-row').forEach(r=>r.classList.toggle('checked',estado));
+  actualizarComprasCount();
+}
+function actualizarComprasCount(){
+  const tot=document.querySelectorAll('#lista-compras .ing-row').length;
+  const ok=document.querySelectorAll('#lista-compras .ing-row.checked').length;
+  document.getElementById('comprasCount').textContent=ok+' de '+tot+' conseguidos';
+}
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.view).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ---------- TIMERS basados en tiempo real ---------- */
+const timers={};
+let wakeLock=null;
+let audioCtx=null;
+async function requestWakeLock(){try{if('wakeLock' in navigator && !wakeLock){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null});}}catch(e){}}
+function releaseWakeLockIfIdle(){const activos=Object.values(timers).some(t=>!t.done);if(!activos && wakeLock){wakeLock.release().catch(()=>{});wakeLock=null;}}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){const activos=Object.values(timers).some(t=>!t.done);if(activos) requestWakeLock();tick();}});
+const fmt=s=>{s=Math.max(0,s);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+function startTimer(name,secs,btn){
+  if(btn.classList.contains('running'))return;
+  try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();}catch(e){}
+  requestWakeLock();
+  btn.classList.add('running');btn.textContent='⏱️ Corriendo...';
+  const id='tm'+Date.now();
+  const card=document.createElement('div');
+  card.className='timer-card';card.id=id;
+  card.innerHTML=`<div><div class="t-name">${name}</div><div class="t-time">${fmt(secs)}</div></div><button onclick="stopTimer('${id}')">✕</button>`;
+  document.getElementById('timerPop').appendChild(card);
+  timers[id]={endAt:Date.now()+secs*1000,name,btn,done:false,card};
+}
+function tick(){
+  const now=Date.now();
+  for(const id in timers){
+    const t=timers[id];
+    if(t.done)continue;
+    const rem=Math.round((t.endAt-now)/1000);
+    const tEl=t.card.querySelector('.t-time');
+    if(rem<=0){
+      t.done=true;tEl.textContent='00:00';t.card.classList.add('alarm');
+      t.card.querySelector('.t-name').textContent='🔔 ¡LISTO! '+t.name+' — tocá ✕ para silenciar';
+      t.btn.classList.remove('running');t.btn.textContent='✓ Cumplido';
+      alarma(id);releaseWakeLockIfIdle();
+    }else{tEl.textContent=fmt(rem);}
+  }
+}
+setInterval(tick,500);
+function stopTimer(id){cortarAlarma(id);const t=timers[id];if(t&&t.card)t.card.remove();delete timers[id];releaseWakeLockIfIdle();}
+const alarmasActivas={};
+function alarma(cardId){
+  try{if(navigator.vibrate) navigator.vibrate([600,200,600,200,600,200,600,200,800]);}catch(e){}
+  const ctx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state==='suspended')ctx.resume();
+  function rafaga(){
+    const patron=[[0,1040],[160,1040],[320,1040],[560,1320],[720,1320],[880,1320],[1120,1560]];
+    patron.forEach(([d,freq])=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=freq;o.type='square';
+      const t0=ctx.currentTime+d/1000;
+      g.gain.setValueAtTime(0.0001,t0);
+      g.gain.exponentialRampToValueAtTime(0.9,t0+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.16);
+      o.start(t0);o.stop(t0+0.18);
+    });
+  }
+  try{rafaga();}catch(e){}
+  if(cardId){alarmasActivas[cardId]=setInterval(()=>{try{if(navigator.vibrate) navigator.vibrate([600,200,600]);rafaga();}catch(e){}},2200);}
+}
+function cortarAlarma(cardId){if(alarmasActivas[cardId]){clearInterval(alarmasActivas[cardId]);delete alarmasActivas[cardId];}try{if(navigator.vibrate) navigator.vibrate(0);}catch(e){}}
+
+renderMise();
+renderRoadmap();
+renderIngredients('ing-blanco',data.blanco.ingredients);
+renderSteps('steps-blanco',data.blanco.steps);
+renderIngredients('ing-semillas',data.semillas.ingredients);
+renderSteps('steps-semillas',data.semillas.steps);
+renderCompras();
+</script>
+</body>
+</html>
